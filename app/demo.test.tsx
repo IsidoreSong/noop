@@ -50,7 +50,8 @@ describe("demo in the app", () => {
     const app = await open("./App.tsx", { network: {} });
     await app.waitFor("Sign in to Noop");
     expect(app.shows("id:try-demo")).toBe(false);
-    await app.type("id:email", "Demo@noop.dev");
+    await app.press("id:use-test-account");
+    expect(app.value("id:email")).toBe("demo@noop.dev");
     await app.press("id:send-code");
     await app.waitFor("id:composer");
     await app.waitFor("text:/Merge PR #42/");

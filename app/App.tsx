@@ -5707,6 +5707,17 @@ function Login(props: { url: string; served: boolean; email: string; notice?: st
               <Button testID="verify" label={busy() ? L("Signing in…", "登录中…") : L("Sign in", "登录")} variant="primary" loading={busy()} disabled={code().length !== CODE_LEN || totp().length !== 6} grow onPress={verify} />
             </If>
           </View>
+          {/* The test account (App Review): fills the email; "Send code" then opens the on-device demo. */}
+          <If when={!props.served && step() === "email"}>
+            <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 4 }}>
+              <Text style={{ fontSize: 14, color: colors.muted }}>{L("No Noop server yet?", "还没有 Noop 服务器？")}</Text>
+              <View role="button" testID="use-test-account" accessibilityLabel={L("Use the test account", "使用测试账号")}
+                onPress={() => { email.set(DEMO_EMAIL); error.set(""); }}
+                hoverStyle={hovered()} style={{ height: 30, justifyContent: "center", paddingHorizontal: 6, borderRadius: 6 }}>
+                <Text style={{ fontSize: 14, fontWeight: "500", color: colors.accent }}>{L("Use the test account", "使用测试账号")}</Text>
+              </View>
+            </View>
+          </If>
         </View>
       </View>
     </Scroll>
